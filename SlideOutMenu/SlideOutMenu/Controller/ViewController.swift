@@ -23,7 +23,10 @@ class ViewController: UITableViewController {
     }
 
     @objc func handleOpen(){
-        print("Open")
+        let vc = MenuController()
+        vc.view.frame = CGRect(x: 0, y: 0, width: 300, height: self.view.frame.height)
+        let window = UIApplication.shared.keyWindow
+        window?.addSubview(vc.view)
     }
     
     @objc func handleClose(){
