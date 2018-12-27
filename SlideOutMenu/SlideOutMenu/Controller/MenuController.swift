@@ -16,3 +16,18 @@ class MenuController: UITableViewController {
     }
 
 }
+
+//MARK: TableView DataSource
+
+extension MenuController{
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "cellId")
+        cell.textLabel?.text = "Yo : \(indexPath.row)"
+        return cell
+    }
+}

@@ -8,8 +8,10 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class HomeController: UITableViewController {
 
+    let menuController = MenuController()
+    fileprivate let menuWidth: CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,21 +25,26 @@ class ViewController: UITableViewController {
     }
 
     @objc func handleOpen(){
-        let vc = MenuController()
-        vc.view.frame = CGRect(x: 0, y: 0, width: 300, height: self.view.frame.height)
+        menuController.view.frame = CGRect(x: -menuWidth, y: 0, width: menuWidth, height: self.view.frame.height)
         let window = UIApplication.shared.keyWindow
-        window?.addSubview(vc.view)
+        window?.addSubview(menuController.view)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.menuController.view.transform = CGAffineTransform(translationX: self.menuWidth, y: 0)
+        })
+        addChild(menuController)
     }
     
     @objc func handleClose(){
-        print("Close")
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.menuController.view.transform = .identity
+        })
     }
     
 }
 
 //MARK: TableView DataSource
 
-extension ViewController{
+extension HomeController{
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
