@@ -13,15 +13,23 @@ class HomeController: UITableViewController {
     let menuController = MenuController()
     fileprivate let menuWidth: CGFloat = 300
     fileprivate var isMenuOpened: Bool = false
+    let darkCoverView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItems()
         setupMenuController()
         setupGestureRecognizer()
+        setupDarkCoverView()
     }
     
-
+    fileprivate func setupDarkCoverView(){
+        darkCoverView.alpha = 0.0
+        darkCoverView.backgroundColor = UIColor(white: 0, alpha: 0.8)
+        darkCoverView.isUserInteractionEnabled = false
+        UIApplication.shared.keyWindow?.addSubview(darkCoverView)
+        darkCoverView.frame = UIApplication.shared.keyWindow?.frame ?? .zero
+    }
     
     fileprivate func setupNavigationItems() {
         navigationItem.title = "Home"
@@ -40,6 +48,8 @@ class HomeController: UITableViewController {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.menuController.view.transform = transform
             self.navigationController?.view.transform = transform
+            self.darkCoverView.transform = transform
+            self.darkCoverView.alpha = (transform == .identity) ? 0 : 1
         })
     }
     
@@ -78,6 +88,8 @@ class HomeController: UITableViewController {
             let transform = CGAffineTransform(translationX: x, y: 0)
             self.menuController.view.transform = transform
             self.navigationController?.view.transform = transform
+            darkCoverView.transform = transform
+            darkCoverView.alpha = x / menuWidth
         }else if gesture.state == .ended{
             handleEndedGesture(gesture)
         }
