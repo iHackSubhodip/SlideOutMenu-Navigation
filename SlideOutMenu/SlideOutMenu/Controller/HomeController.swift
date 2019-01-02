@@ -12,6 +12,7 @@ class HomeController: UITableViewController {
 
     let menuController = MenuController()
     fileprivate let menuWidth: CGFloat = 300
+    fileprivate var isMenuOpened: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,26 +48,49 @@ class HomeController: UITableViewController {
         view.addGestureRecognizer(panGesture)
     }
     
+    fileprivate func handleEndedGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        if isMenuOpened{
+            if abs(translation.x) < menuWidth / 2{
+                handleOpen()
+            }else{
+                handleClose()
+            }
+        }else{
+            if translation.x < menuWidth / 2{
+                handleClose()
+            }else{
+                handleOpen()
+            }
+        }
+        
+    }
+    
     @objc func handlePan(gesture: UIPanGestureRecognizer){
         let translation = gesture.translation(in: view)
         if gesture.state == .changed{
             var x = translation.x
+            if isMenuOpened{
+                x += menuWidth
+            }
             x = min(menuWidth, x)
             x = max(0, x)
-            let transform = CGAffineTransform(translationX: translation.x, y: 0)
+            let transform = CGAffineTransform(translationX: x, y: 0)
             self.menuController.view.transform = transform
             self.navigationController?.view.transform = transform
-        }else{
-            handleOpen()
+        }else if gesture.state == .ended{
+            handleEndedGesture(gesture)
         }
         
     }
     
     @objc func handleOpen(){
+        isMenuOpened = true
         performAnimations(transform: CGAffineTransform(translationX: menuWidth, y: 0))
     }
     
     @objc func handleClose(){
+        isMenuOpened = false
         performAnimations(transform: .identity)
     }
     
