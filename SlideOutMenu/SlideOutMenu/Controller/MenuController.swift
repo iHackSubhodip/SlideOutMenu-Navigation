@@ -31,3 +31,20 @@ extension MenuController{
         return cell
     }
 }
+
+
+//MARK: TableView Delegate
+
+extension MenuController{
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = CustomMenuHeader()
+        return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 200
+    }
+}
+
+
