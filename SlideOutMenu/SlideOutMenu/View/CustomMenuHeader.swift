@@ -10,17 +10,29 @@ import UIKit
 
 class CustomMenuHeader: UIView {
     
+    private lazy var profileImageView: CustomImageView = {
+        let profileImageView = CustomImageView()
+        profileImageView.image = UIImage(named: "image")
+        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.layer.cornerRadius = 24
+        profileImageView.clipsToBounds = true
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        return profileImageView
+    }()
+    
+    
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.text = "Subhodip Banerjee"
-        nameLabel.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
+        nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
     
     private lazy var userNameLabel: UILabel = {
         let userNameLabel = UILabel()
-        userNameLabel.text = "@Subhodip"
+        userNameLabel.text = "@iHack"
+        userNameLabel.font = UIFont.systemFont(ofSize: 12)
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         return userNameLabel
     }()
@@ -28,12 +40,20 @@ class CustomMenuHeader: UIView {
     private lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.text = "Hey, have a Good day..."
+        statusLabel.font = UIFont.systemFont(ofSize: 14)
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         return statusLabel
     }()
     
+    
     private lazy var menuStackView: UIStackView = {
-        let menuStackView = UIStackView(arrangedSubviews: [UIView(), nameLabel, userNameLabel, SpacerView(space: 16), statusLabel])
+        let menuStackView = UIStackView(arrangedSubviews: [
+            UIView(),
+            UIStackView(arrangedSubviews: [profileImageView, UIView()]),
+            nameLabel,
+            userNameLabel,
+            SpacerView(space: 8),
+            statusLabel])
         menuStackView.axis = .vertical
         menuStackView.spacing = 8
         menuStackView.isLayoutMarginsRelativeArrangement = true
