@@ -19,7 +19,7 @@ class HomeController: UITableViewController {
         super.viewDidLoad()
         setupNavigationItems()
         setupMenuController()
-        setupGestureRecognizer()
+        //setupGestureRecognizer()
         setupDarkCoverView()
     }
     
