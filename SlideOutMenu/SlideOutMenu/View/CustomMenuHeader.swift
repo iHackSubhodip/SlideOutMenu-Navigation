@@ -10,10 +10,56 @@ import UIKit
 
 class CustomMenuHeader: UIView {
     
+    private lazy var nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.text = "Subhodip Banerjee"
+        nameLabel.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        return nameLabel
+    }()
+    
+    private lazy var userNameLabel: UILabel = {
+        let userNameLabel = UILabel()
+        userNameLabel.text = "@Subhodip"
+        userNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        return userNameLabel
+    }()
+    
+    private lazy var statusLabel: UILabel = {
+        let statusLabel = UILabel()
+        statusLabel.text = "Hey, have a Good day..."
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        return statusLabel
+    }()
+    
+    private lazy var menuStackView: UIStackView = {
+        let menuStackView = UIStackView(arrangedSubviews: [UIView(), nameLabel, userNameLabel, SpacerView(space: 16), statusLabel])
+        menuStackView.axis = .vertical
+        menuStackView.spacing = 8
+        menuStackView.isLayoutMarginsRelativeArrangement = true
+        menuStackView.layoutMargins = UIEdgeInsets(top: 24, left: 24, bottom: 24, right: 24)
+        menuStackView.translatesAutoresizingMaskIntoConstraints = false
+        return menuStackView
+    }()
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
+        setupStackView()
+        setupStackViewConstraint()
     }
     
+    fileprivate func setupStackView() {
+        addSubview(menuStackView)
+    }
+    
+    fileprivate func setupStackViewConstraint() {
+        menuStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        menuStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        menuStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        menuStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("issue is there")
