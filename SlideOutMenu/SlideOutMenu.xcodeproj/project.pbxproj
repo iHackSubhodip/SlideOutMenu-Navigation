@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9018937921E893D900B2608A /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9018937821E893D900B2608A /* MenuItem.swift */; };
+		9018937D21E89A7200B2608A /* CustomMenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9018937C21E89A7200B2608A /* CustomMenuViewCell.swift */; };
+		9018937F21E89A9D00B2608A /* CustomMenuImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9018937E21E89A9D00B2608A /* CustomMenuImageView.swift */; };
 		90429A7D21D22C3C00F19623 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90429A7C21D22C3C00F19623 /* AppDelegate.swift */; };
 		90429A7F21D22C3C00F19623 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90429A7E21D22C3C00F19623 /* HomeController.swift */; };
 		90429A8221D22C3C00F19623 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90429A8021D22C3C00F19623 /* Main.storyboard */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9018937821E893D900B2608A /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		9018937C21E89A7200B2608A /* CustomMenuViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuViewCell.swift; sourceTree = "<group>"; };
+		9018937E21E89A9D00B2608A /* CustomMenuImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuImageView.swift; sourceTree = "<group>"; };
 		90429A7921D22C3C00F19623 /* SlideOutMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlideOutMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90429A7C21D22C3C00F19623 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90429A7E21D22C3C00F19623 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -45,6 +51,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9018937721E893C800B2608A /* MenuController */ = {
+			isa = PBXGroup;
+			children = (
+				90429AA121D49CB600F19623 /* MenuController.swift */,
+				9018937821E893D900B2608A /* MenuItem.swift */,
+			);
+			path = MenuController;
+			sourceTree = "<group>";
+		};
+		9018937A21E89A3500B2608A /* CustomMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				90F7290521E47BD300512AEA /* CustomMenuHeader.swift */,
+				9018937C21E89A7200B2608A /* CustomMenuViewCell.swift */,
+				9018937B21E89A4600B2608A /* Helper */,
+			);
+			path = CustomMenuView;
+			sourceTree = "<group>";
+		};
+		9018937B21E89A4600B2608A /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				90F7290721E4924500512AEA /* SpacerView.swift */,
+				90F7290921E4966800512AEA /* CustomImageView.swift */,
+				9018937E21E89A9D00B2608A /* CustomMenuImageView.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		90429A7021D22C3C00F19623 = {
 			isa = PBXGroup;
 			children = (
@@ -78,9 +113,9 @@
 		90429AA021D49C9300F19623 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9018937721E893C800B2608A /* MenuController */,
 				9065163E21DCD735008B23F2 /* BaseController */,
 				90429A7E21D22C3C00F19623 /* HomeController.swift */,
-				90429AA121D49CB600F19623 /* MenuController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -96,9 +131,7 @@
 		90F7290421E478C100512AEA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				90F7290521E47BD300512AEA /* CustomMenuHeader.swift */,
-				90F7290721E4924500512AEA /* SpacerView.swift */,
-				90F7290921E4966800512AEA /* CustomImageView.swift */,
+				9018937A21E89A3500B2608A /* CustomMenuView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -178,8 +211,11 @@
 				9065164021DCD749008B23F2 /* BaseViewController.swift in Sources */,
 				90F7290821E4924500512AEA /* SpacerView.swift in Sources */,
 				90F7290A21E4966800512AEA /* CustomImageView.swift in Sources */,
+				9018937D21E89A7200B2608A /* CustomMenuViewCell.swift in Sources */,
 				90F7290621E47BD300512AEA /* CustomMenuHeader.swift in Sources */,
+				9018937921E893D900B2608A /* MenuItem.swift in Sources */,
 				90429AA221D49CB600F19623 /* MenuController.swift in Sources */,
+				9018937F21E89A9D00B2608A /* CustomMenuImageView.swift in Sources */,
 				90429A7D21D22C3C00F19623 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

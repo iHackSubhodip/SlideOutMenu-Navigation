@@ -17,6 +17,7 @@ class HomeController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.separatorStyle = .none
         setupNavigationItems()
         setupMenuController()
         //setupGestureRecognizer()

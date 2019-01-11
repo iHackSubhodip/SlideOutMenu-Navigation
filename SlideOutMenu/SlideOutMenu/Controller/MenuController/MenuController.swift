@@ -10,9 +10,16 @@ import UIKit
 
 class MenuController: UITableViewController {
 
+    let menuItems = [
+        SidebarMenuItem(menuImageIcon: #imageLiteral(resourceName: "profile"), menuTitle: "Profile"),
+        SidebarMenuItem(menuImageIcon: #imageLiteral(resourceName: "lists"), menuTitle: "Lists"),
+        SidebarMenuItem(menuImageIcon: #imageLiteral(resourceName: "bookmarks"), menuTitle: "Bookmarks"),
+        SidebarMenuItem(menuImageIcon: #imageLiteral(resourceName: "moments"), menuTitle: "Moments")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        tableView.separatorStyle = .none
     }
 
 }
@@ -22,12 +29,14 @@ class MenuController: UITableViewController {
 extension MenuController{
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return menuItems.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "Yo : \(indexPath.row)"
+        let cell = CustomMenuViewCell(style: .default, reuseIdentifier: "cellId")
+        let menuItem = menuItems[indexPath.row]
+        cell.menuContent.text = menuItem.menuTitle
+        cell.menuImageView.image = menuItem.menuImageIcon
         return cell
     }
 }

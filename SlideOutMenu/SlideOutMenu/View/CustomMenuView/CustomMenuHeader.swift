@@ -52,7 +52,7 @@ class CustomMenuHeader: UIView {
             UIStackView(arrangedSubviews: [profileImageView, UIView()]),
             nameLabel,
             userNameLabel,
-            SpacerView(space: 8),
+            SpacerView(space: 3),
             statusLabel])
         menuStackView.axis = .vertical
         menuStackView.spacing = 8
