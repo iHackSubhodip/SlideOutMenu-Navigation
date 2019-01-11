@@ -50,10 +50,6 @@ extension MenuController{
         let headerView = CustomMenuHeader()
         return headerView
     }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 200
-    }
 }
 
 

@@ -48,7 +48,6 @@ class CustomMenuHeader: UIView {
     
     private lazy var menuStackView: UIStackView = {
         let menuStackView = UIStackView(arrangedSubviews: [
-            UIView(),
             UIStackView(arrangedSubviews: [profileImageView, UIView()]),
             nameLabel,
             userNameLabel,
