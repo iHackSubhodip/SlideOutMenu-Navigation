@@ -8,24 +8,26 @@
 
 import UIKit
 
+class RightContainerView: UIView {}
+class MenuContainerView: UIView {}
+class DarkCoverView: UIView {}
+
 class BaseViewController: UIViewController {
 
-    let redView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
+    let redView: RightContainerView = {
+        let view = RightContainerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let blueView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .blue
+    let blueView: MenuContainerView = {
+        let view = MenuContainerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let darkCoverView: UIView = {
-        let v = UIView()
+    let darkCoverView: DarkCoverView = {
+        let v = DarkCoverView()
         v.backgroundColor = UIColor(white: 0, alpha: 0.7)
         v.alpha = 0
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +39,7 @@ class BaseViewController: UIViewController {
     fileprivate let menuWidth: CGFloat = 300
     fileprivate var isMenuOpened = false
     fileprivate let velocityThreshold: CGFloat = 500
+    var rightViewController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +48,10 @@ class BaseViewController: UIViewController {
         setupGestureRecognizer()
         setupViewController()
     }
+}
+
+//MARK: View Setup
+extension BaseViewController{
     
     fileprivate func setupView(){
         view.addSubview(redView)
@@ -63,16 +70,15 @@ class BaseViewController: UIViewController {
         redViewLeadingConstraint.isActive = true
     }
     
-    fileprivate func setupGestureRecognizer() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        view.addGestureRecognizer(panGesture)
-    }
-    
     fileprivate func setupViewController(){
-        let homeController = HomeController()
+        rightViewController = HomeController()
         let menuController = MenuController()
         
-        let homeView = homeController.view!
+        guard let rightVC = rightViewController else{
+            return
+        }
+        
+        let homeView = rightVC.view!
         let menuView = menuController.view!
         
         homeView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,8 +105,18 @@ class BaseViewController: UIViewController {
             darkCoverView.trailingAnchor.constraint(equalTo: redView.trailingAnchor),
             ])
         
-        addChild(homeController)
+        addChild(rightVC)
         addChild(menuController)
+    }
+}
+
+
+//MARK: Gesture Setup
+extension BaseViewController{
+    
+    fileprivate func setupGestureRecognizer() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        view.addGestureRecognizer(panGesture)
     }
     
     fileprivate func handleEnded(gesture: UIPanGestureRecognizer){
@@ -148,16 +164,50 @@ class BaseViewController: UIViewController {
         }
     }
     
-    fileprivate func openMenu() {
+}
+
+//MARK: Menu operation [open/close]
+extension BaseViewController{
+    
+    func openMenu() {
         isMenuOpened = true
         redViewLeadingConstraint.constant = menuWidth
         performAnimations()
     }
     
-    fileprivate func closeMenu() {
+    func closeMenu() {
         redViewLeadingConstraint.constant = 0
         isMenuOpened = false
         performAnimations()
+    }
+
+    
+    func didSelectMenuItem(_ indexPath: IndexPath){
+        cleanupRightViewController()
+        
+        switch indexPath.row {
+        case 0:
+            print("Profile")
+        case 1:
+            let listController = ListViewController()
+            redView.addSubview(listController.view)
+            addChild(listController)
+            rightViewController = listController
+        case 2:
+            let bookmarkController = BookmarkTableViewController()
+            redView.addSubview(bookmarkController.view)
+            addChild(bookmarkController)
+            rightViewController = bookmarkController
+        default:
+            print("manage")
+        }
+        redView.bringSubviewToFront(darkCoverView)
+        closeMenu()
+    }
+    
+    fileprivate func cleanupRightViewController(){
+        rightViewController?.view.removeFromSuperview()
+        rightViewController?.removeFromParent()
     }
     
     fileprivate func performAnimations() {
@@ -167,4 +217,5 @@ class BaseViewController: UIViewController {
             self.darkCoverView.alpha = self.isMenuOpened ? 1 : 0
         })
     }
+    
 }

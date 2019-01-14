@@ -50,6 +50,11 @@ extension MenuController{
         let headerView = CustomMenuHeader()
         return headerView
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let slidingController = UIApplication.shared.keyWindow?.rootViewController as? BaseViewController
+        slidingController?.didSelectMenuItem(indexPath)
+    }
 }
 
 
