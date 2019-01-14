@@ -12,8 +12,13 @@ class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .yellow
+        
+        let label = UILabel()
+        label.text = "List"
+        label.textAlignment = .center
+        label.frame = view.frame
+        
+        view.addSubview(label)
     }
 
 }

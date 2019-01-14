@@ -18,6 +18,7 @@ class HomeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
+        setupNavigationItems()
     }
     
     fileprivate func setupNavigationItems() {
@@ -29,11 +30,11 @@ class HomeController: UITableViewController {
     
     
     @objc func handleOpen(){
-        isMenuOpened = true
+        (UIApplication.shared.keyWindow?.rootViewController as? BaseViewController)?.openMenu()
     }
     
     @objc func handleClose(){
-        isMenuOpened = false
+        (UIApplication.shared.keyWindow?.rootViewController as? BaseViewController)?.closeMenu()
     }
     
 }

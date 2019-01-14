@@ -39,11 +39,11 @@ class BaseViewController: UIViewController {
     fileprivate let menuWidth: CGFloat = 300
     fileprivate var isMenuOpened = false
     fileprivate let velocityThreshold: CGFloat = 500
-    var rightViewController: UIViewController?
+    var rightViewController: UIViewController = UINavigationController(rootViewController: HomeController())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
         setupView()
         setupGestureRecognizer()
         setupViewController()
@@ -71,14 +71,9 @@ extension BaseViewController{
     }
     
     fileprivate func setupViewController(){
-        rightViewController = HomeController()
         let menuController = MenuController()
         
-        guard let rightVC = rightViewController else{
-            return
-        }
-        
-        let homeView = rightVC.view!
+        let homeView = rightViewController.view!
         let menuView = menuController.view!
         
         homeView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +100,7 @@ extension BaseViewController{
             darkCoverView.trailingAnchor.constraint(equalTo: redView.trailingAnchor),
             ])
         
-        addChild(rightVC)
+        addChild(rightViewController)
         addChild(menuController)
     }
 }
@@ -187,27 +182,32 @@ extension BaseViewController{
         
         switch indexPath.row {
         case 0:
-            print("Profile")
+            rightViewController = UINavigationController(rootViewController: HomeController())
         case 1:
-            let listController = ListViewController()
-            redView.addSubview(listController.view)
-            addChild(listController)
-            rightViewController = listController
+            rightViewController = UINavigationController(rootViewController: ListViewController())
         case 2:
-            let bookmarkController = BookmarkTableViewController()
-            redView.addSubview(bookmarkController.view)
-            addChild(bookmarkController)
-            rightViewController = bookmarkController
+            rightViewController = BookmarkTableViewController()
+            
         default:
-            print("manage")
+            let tabBarController = UITabBarController()
+            let momentsVC = UIViewController()
+            momentsVC.view.backgroundColor = .yellow
+            momentsVC.navigationItem.title = "Moments"
+            let navigationVC = UINavigationController(rootViewController: momentsVC)
+            navigationVC.tabBarItem.title = "Moments tab"
+            tabBarController.viewControllers = [navigationVC]
+            rightViewController = tabBarController
         }
+        
+        redView.addSubview(rightViewController.view)
+        addChild(rightViewController)
         redView.bringSubviewToFront(darkCoverView)
         closeMenu()
     }
     
     fileprivate func cleanupRightViewController(){
-        rightViewController?.view.removeFromSuperview()
-        rightViewController?.removeFromParent()
+        rightViewController.view.removeFromSuperview()
+        rightViewController.removeFromParent()
     }
     
     fileprivate func performAnimations() {
