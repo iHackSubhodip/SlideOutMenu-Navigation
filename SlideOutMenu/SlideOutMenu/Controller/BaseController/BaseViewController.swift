@@ -36,6 +36,7 @@ class BaseViewController: UIViewController {
     
     
     var redViewLeadingConstraint: NSLayoutConstraint!
+    var redViewTrailingConstraint: NSLayoutConstraint!
     fileprivate let menuWidth: CGFloat = 300
     fileprivate var isMenuOpened = false
     fileprivate let velocityThreshold: CGFloat = 500
@@ -46,6 +47,7 @@ class BaseViewController: UIViewController {
         view.backgroundColor = .white
         setupView()
         setupGestureRecognizer()
+        setupTapGestureRecognizer()
         setupViewController()
     }
 }
@@ -59,15 +61,17 @@ extension BaseViewController{
         NSLayoutConstraint.activate([
             redView.topAnchor.constraint(equalTo: view.topAnchor),
             redView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            redView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             blueView.topAnchor.constraint(equalTo: view.topAnchor),
             blueView.bottomAnchor.constraint(equalTo: redView.bottomAnchor),
-            blueView.trailingAnchor.constraint(equalTo: redView.safeAreaLayoutGuide.leadingAnchor),
+            blueView.trailingAnchor.constraint(equalTo: redView.leadingAnchor),
             blueView.widthAnchor.constraint(equalToConstant: menuWidth)
             ])
         redViewLeadingConstraint = redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0)
         redViewLeadingConstraint.isActive = true
+        
+        redViewTrailingConstraint = redView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+        redViewTrailingConstraint.isActive = true
     }
     
     fileprivate func setupViewController(){
@@ -114,6 +118,33 @@ extension BaseViewController{
         view.addGestureRecognizer(panGesture)
     }
     
+    fileprivate func setupTapGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        darkCoverView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleTap(gesture: UIPanGestureRecognizer){
+        closeMenu()
+    }
+    
+    @objc func handlePan(gesture: UIPanGestureRecognizer){
+        let translation = gesture.translation(in: view)
+        var x = translation.x
+        
+        x = isMenuOpened ? x + menuWidth : x
+        
+        x = min(menuWidth, x)
+        x = max(0, x)
+        
+        redViewLeadingConstraint.constant = x
+        redViewTrailingConstraint.constant = x
+        darkCoverView.alpha = x / menuWidth
+        
+        if gesture.state == .ended{
+            handleEnded(gesture: gesture)
+        }
+    }
+    
     fileprivate func handleEnded(gesture: UIPanGestureRecognizer){
         let translation = gesture.translation(in: view)
         let velocity = gesture.velocity(in: view)
@@ -142,23 +173,6 @@ extension BaseViewController{
         }
     }
     
-    @objc func handlePan(gesture: UIPanGestureRecognizer){
-        let translation = gesture.translation(in: view)
-        var x = translation.x
-        
-        x = isMenuOpened ? x + menuWidth : x
-        
-        x = min(menuWidth, x)
-        x = max(0, x)
-        
-        redViewLeadingConstraint.constant = x
-        darkCoverView.alpha = x / menuWidth
-        
-        if gesture.state == .ended{
-            handleEnded(gesture: gesture)
-        }
-    }
-    
 }
 
 //MARK: Menu operation [open/close]
@@ -167,11 +181,13 @@ extension BaseViewController{
     func openMenu() {
         isMenuOpened = true
         redViewLeadingConstraint.constant = menuWidth
+        redViewTrailingConstraint.constant = menuWidth
         performAnimations()
     }
     
     func closeMenu() {
         redViewLeadingConstraint.constant = 0
+        redViewTrailingConstraint.constant = 0
         isMenuOpened = false
         performAnimations()
     }
