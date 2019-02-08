@@ -41,6 +41,7 @@ class BaseViewController: UIViewController {
     fileprivate var isMenuOpened = false
     fileprivate let velocityThreshold: CGFloat = 500
     var rightViewController: UIViewController = UINavigationController(rootViewController: HomeController())
+    let menuController = MenuController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +76,6 @@ extension BaseViewController{
     }
     
     fileprivate func setupViewController(){
-        let menuController = MenuController()
         
         let homeView = rightViewController.view!
         let menuView = menuController.view!
