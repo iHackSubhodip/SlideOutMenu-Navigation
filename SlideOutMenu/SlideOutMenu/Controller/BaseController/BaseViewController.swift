@@ -26,6 +26,7 @@ class BaseViewController: UIViewController {
         return view
     }()
     
+    
     let darkCoverView: DarkCoverView = {
         let v = DarkCoverView()
         v.backgroundColor = UIColor(white: 0, alpha: 0.7)
